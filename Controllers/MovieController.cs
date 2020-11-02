@@ -29,7 +29,7 @@ namespace MovieApi.Controllers {
             else return BadRequest ();
         }
 
-        [HttpGet ("movie/", Name = "GetMovie")]
+        [HttpGet ("{name}", Name = "GetMovie")]
         public IActionResult GetMovieByName (string name) {
             if (name == null) return BadRequest ();
             Movie foundMovie = Movies.FirstOrDefault<Movie> (x => x.Name.Equals (name));
@@ -49,7 +49,7 @@ namespace MovieApi.Controllers {
         public IActionResult CreateMovie (Movie movie) {
             try {
                 Movies.Add (movie);
-                return CreatedAtRoute ("GetMovie", new { nameof = movie.Name }, movie);
+                return CreatedAtRoute ("GetMovie", new { name = movie.Name }, movie);
             } catch (Exception e) {
                 return StatusCode (500, e.Message);
             }
